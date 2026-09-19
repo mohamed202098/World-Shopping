@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewBag.PageTitle = "Users Management";
+    ViewBag.CardTitle = "View Users";
+
+}
+<div>
+    <a class="btn btn-primary" href="/Identity/Account/Register">Create new User</a>
+</div>
+
+<br />
+<table class="table table-hover" width="100%">
+    <tr>
+        <td>Name</td>
+        <td>Email</td>
+        <td>PhoneNumber</td>
+        <td>Status</td>
+        <td>Actions</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Email</td>
+            <td>@item.PhoneNumber</td>
+            <td style="font-size:18px">
+                @if (item.IsActive)
+                {
+                    <span class="badge badge-success" >Active</span>
+
+                }
+                else
+                {
+                    <span class="badge badge-danger">Blocked</span>
+                }
+            </td>
+            <td>
+                @if (item.IsActive)
+                {
+                    <a class="btn btn-danger" asp-action="LockUnlock" asp-route-id="@item.Id">
+                        <i class="fas fa-lock"></i>
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-success" asp-action="LockUnlock" asp-route-id="@item.Id">
+                        <i class="fas fa-unlock"></i>
+                    </a>
+                }
+                <a class="btn btn-danger ml-3" href="/Admin/Users/Delete/@item.Id">Delete</a>
+            </td>
+           
+        </tr>
+        
+    }
+</table>
+

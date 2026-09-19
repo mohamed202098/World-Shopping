@@ -1,0 +1,70 @@
+﻿@model ProductVM
+
+@{
+    ViewBag.PageTitle = "Product Management";
+    ViewBag.CardTitle = "Edit Product";
+    Layout = "~/Views/Shared/_dashboard.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Product.Id" />
+            <input type="hidden" asp-for="Product.Image" />
+            <div class="form-group">
+                <label asp-for="Product.Name"></label>
+                <input asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Description"></label>
+                <textarea id="mytextarea" asp-for="Product.Description" class="form-control"></textarea>
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Price"></label>
+                <input asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label  asp-for="Product.Image"></label>
+                <input type="file" name="file" id="imgfile" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.CategoryId"></label>
+                <select asp-for="Product.CategoryId" class="form-control" asp-items="ViewBag.CategoryList">
+                    <option disabled selected>-- Select Categort --</option>
+                </select>
+
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Save" class="btn btn-success">Save</button>
+                <a asp-action="Index" asp-controller="Product" class="btn btn-warning">Back To Index</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div class="container">
+            <img id="ImagePrevew" src="@ViewBag.ImagePath@Model.Product.Image" width="300" height="300" />
+        </div>
+    </div>
+</div>
+
+@*Data Validation Client Side*@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function() {
+            $('#mytextarea').summernote({
+              height: 300
+            });
+          });
+    </script>
+
+}
+
